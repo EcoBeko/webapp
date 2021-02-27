@@ -1,5 +1,6 @@
 module.exports = {
   lintOnSave: false,
+  basePath: "/app",
 
-  transpileDependencies: ["vuetify"]
+  transpileDependencies: ["vuetify"],
 };
