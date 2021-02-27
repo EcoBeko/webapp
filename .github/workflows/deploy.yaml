@@ -1,4 +1,4 @@
-name: Docs Deploy
+name: Webapp Deploy
 
 on:
   push:
