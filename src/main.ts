@@ -1,5 +1,7 @@
+import "@/assets/scss/index.scss";
 import Vue from "vue";
 import App from "@/modules/base/views/App.vue";
+
 import { router } from "@/core/router";
 import { store } from "@/core/store";
 import { vuetify } from "@/core/plugins/vuetify";
