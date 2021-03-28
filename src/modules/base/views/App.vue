@@ -11,6 +11,9 @@
         <router-view></router-view>
       </transition>
     </v-main>
+
+    <loading-bar />
+    <app-notification />
   </v-app>
 </template>
 
@@ -19,7 +22,15 @@ import { Component, Vue } from "vue-property-decorator";
 import { BaseModule } from "@/modules";
 import { AuthService } from "@/modules/auth/services/auth.service";
 
-@Component({})
+import LoadingBar from "../components/LoadingBar.vue";
+import AppNotification from "../components/AppNotification.vue";
+
+@Component({
+  components: {
+    LoadingBar,
+    AppNotification,
+  },
+})
 export default class App extends Vue {
   prevHeight = "0";
   get transitionName() {

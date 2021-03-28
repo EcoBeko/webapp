@@ -1,6 +1,25 @@
 import { BaseModule } from "@/modules";
 import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import VueRouter, {
+  NavigationFailure,
+  RawLocation,
+  Route,
+  RouteConfig,
+} from "vue-router";
+
+const originalPush = VueRouter.prototype.push as (
+  location: RawLocation,
+) => Promise<Route>;
+VueRouter.prototype.push = async function(
+  this: VueRouter,
+  location: RawLocation,
+) {
+  return originalPush.call(this, location).catch((err: NavigationFailure) => {
+    if (err.name == "NavigationDuplicated") return err;
+    if (err.name == "Error") return err;
+    throw err;
+  });
+} as (location: RawLocation) => Promise<Route>;
 
 Vue.use(VueRouter);
 
