@@ -79,13 +79,14 @@ export default class WelcomeView extends Vue {}
 
     &__image {
       max-height: 525px;
-      transform: translateX(20%);
+      position: absolute;
+      transform: translate(20%, -15%);
     }
     &__clip {
       max-height: 150px;
       position: absolute;
       left: 0px;
-      bottom: 0px;
+      bottom: -10%;
     }
   }
 }
