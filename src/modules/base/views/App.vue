@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { BaseModule } from "@/modules";
+import { AuthService } from "@/modules/auth/services/auth.service";
 
 @Component({})
 export default class App extends Vue {
@@ -41,6 +42,10 @@ export default class App extends Vue {
 
   afterEnter(el: HTMLDivElement) {
     el.style.height = "";
+  }
+
+  async created() {
+    await AuthService.login();
   }
 }
 </script>
