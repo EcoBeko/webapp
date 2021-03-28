@@ -9,7 +9,7 @@
     right
     vertical
   >
-    <p>{{ snackBarPayload.message }}</p>
+    <p class="message">{{ snackBarPayload.message }}</p>
     <v-btn text @click="snackBarPayload.show = false">Close</v-btn>
   </v-snackbar>
 </template>
@@ -29,5 +29,9 @@ export default class AppNotification extends Vue {
 <style lang="scss" scoped>
 #app-notification {
   max-width: 420px;
+
+  .message {
+    font-size: 1rem;
+  }
 }
 </style>

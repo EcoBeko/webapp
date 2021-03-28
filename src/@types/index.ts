@@ -19,7 +19,6 @@ export interface IUser {
   first_name?: string;
   last_name?: string;
   username: string;
-  password: string;
   gender: UserGender;
   avatar: string;
   role: UserRole;

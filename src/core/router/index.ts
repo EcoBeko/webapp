@@ -1,4 +1,5 @@
 import { BaseModule } from "@/modules";
+import { AuthService } from "@/modules/auth/services/auth.service";
 import Vue from "vue";
 import VueRouter, {
   NavigationFailure,
@@ -91,6 +92,18 @@ router.beforeEach((to, from, next) => {
   const fromDepth = from.path.split("/").length;
   const transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
   BaseModule.setTransitionName(transitionName);
+
+  const token = AuthService.getLocalToken();
+
+  if (to.meta.isPublic && token) {
+    return next({
+      name: "news",
+    });
+  } else if (!to.meta.isPublic && !token) {
+    return next({
+      name: "welcome",
+    });
+  }
 
   next();
 });
