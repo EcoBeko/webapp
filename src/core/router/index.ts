@@ -87,6 +87,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "profile",
         name: "profile",
+        component: () => import("@/modules/profile/views/ProfileView.vue"),
         meta: {
           index: 5,
         },

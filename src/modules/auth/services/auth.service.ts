@@ -61,6 +61,26 @@ export class AuthService {
     return data;
   }
 
+  @ApiCatch
+  public static async updateUser(
+    id: string,
+    first_name: string,
+    last_name: string,
+    password: string,
+    gender: UserGender,
+    role: UserRole,
+  ) {
+    const { data } = await api.put("users/" + id, {
+      first_name,
+      last_name,
+      password,
+      gender,
+      role,
+    });
+
+    return data;
+  }
+
   public static getLocalToken() {
     return localStorage.getItem("token");
   }

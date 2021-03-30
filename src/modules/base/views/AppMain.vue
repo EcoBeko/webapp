@@ -2,9 +2,9 @@
   <div id="app-main" class="full-height">
     <AppHeader />
     <AppNavigation />
-    <main>
+    <main class="d-flex justify-center py-6">
       <transition :name="transitionName" mode="out-in">
-        <router-view></router-view>
+        <router-view class="container full-width"></router-view>
       </transition>
     </main>
   </div>

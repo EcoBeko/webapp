@@ -1,5 +1,10 @@
 <template>
-  <nav id="app-navigation" class="d-flex justify-center">
+  <v-card
+    tag="nav"
+    id="app-navigation"
+    class="d-flex justify-center"
+    elevation="1"
+  >
     <div class="container full-width d-flex align-center">
       <router-link
         v-for="item in items"
@@ -12,7 +17,7 @@
       </router-link>
       <span class="nav-item" @click="logout">Logout</span>
     </div>
-  </nav>
+  </v-card>
 </template>
 
 <script lang="ts">
