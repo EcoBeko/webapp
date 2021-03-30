@@ -8,7 +8,7 @@
         @enter="enter"
         @afterEnter="afterEnter"
       >
-        <router-view></router-view>
+        <router-view v-if="!isLoading"></router-view>
       </transition>
     </v-main>
 
@@ -55,8 +55,11 @@ export default class App extends Vue {
     el.style.height = "";
   }
 
+  isLoading = false;
   async created() {
+    this.isLoading = true;
     await AuthService.login();
+    this.isLoading = false;
   }
 }
 </script>
@@ -64,27 +67,5 @@ export default class App extends Vue {
 <style lang="scss" scoped>
 #app {
   min-height: 100vh;
-}
-
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition-duration: 0.5s;
-  transition-property: height, opacity, transform;
-  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
-  overflow: hidden;
-}
-
-.slide-left-enter,
-.slide-right-leave-active {
-  opacity: 0;
-  transform: translate(2em, 0);
-}
-
-.slide-left-leave-active,
-.slide-right-enter {
-  opacity: 0;
-  transform: translate(-2em, 0);
 }
 </style>

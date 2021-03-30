@@ -19,6 +19,12 @@ export class AuthService {
     }
   }
 
+  public static logout() {
+    localStorage.removeItem("token");
+
+    location.reload();
+  }
+
   @ApiCatch
   public static async authenticate(
     username: string,
@@ -59,7 +65,7 @@ export class AuthService {
     return localStorage.getItem("token");
   }
 
-  public static setLocalToken(token: string) {
+  public static setLocalToken(token?: string) {
     return localStorage.setItem("token", token);
   }
 }

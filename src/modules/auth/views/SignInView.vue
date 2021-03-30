@@ -1,6 +1,8 @@
 <template>
   <div id="sign-in-view" class="d-flex flex-column align-center">
-    <div class="wrapper d-flex flex-column justify-space-between py-8">
+    <div
+      class="wrapper container d-flex flex-column justify-space-between py-8"
+    >
       <div class="logo d-flex align-center">
         <img class="logo__image" src="@/assets/logo.svg" alt="logo" />
         <span class="accent--text font-weight-medium ml-3 text-h5">
@@ -97,7 +99,6 @@ export default class SignInView extends Mixins(FormValidator) {
 .wrapper {
   height: 100%;
   width: 100%;
-  max-width: 1100px;
 }
 
 .logo__image {

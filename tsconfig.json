@@ -11,7 +11,7 @@
     "allowJs": true,
     "sourceMap": true,
     "strictPropertyInitialization": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "baseUrl": ".",
     "types": ["webpack-env", "vuetify", "node"],
     "paths": {

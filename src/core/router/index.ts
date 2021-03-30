@@ -8,6 +8,8 @@ import VueRouter, {
   RouteConfig,
 } from "vue-router";
 
+import AppMain from "@/modules/base/views/AppMain.vue";
+
 const originalPush = VueRouter.prototype.push as (
   location: RawLocation,
 ) => Promise<Route>;
@@ -52,30 +54,56 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "index",
+    component: AppMain,
     children: [
       {
         path: "news",
         name: "news",
+        meta: {
+          index: 1,
+        },
       },
       {
         path: "map",
         name: "map",
+        meta: {
+          index: 2,
+        },
       },
       {
         path: "messages",
         name: "messages",
+        meta: {
+          index: 3,
+        },
       },
       {
         path: "friends",
         name: "friends",
+        meta: {
+          index: 4,
+        },
       },
       {
         path: "profile",
         name: "profile",
+        meta: {
+          index: 5,
+        },
       },
       {
         path: "communities",
         name: "communities",
+        meta: {
+          index: 6,
+        },
+      },
+      {
+        path: "eco-projects",
+        name: "eco-projects",
+        meta: {
+          index: 7,
+        },
       },
     ],
   },
@@ -88,10 +116,16 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const toDepth = to.path.split("/").length;
-  const fromDepth = from.path.split("/").length;
-  const transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
-  BaseModule.setTransitionName(transitionName);
+  if (to.meta.index) {
+    const transitionName =
+      to.meta.index < from.meta.index ? "slide-right" : "slide-left";
+    BaseModule.setTransitionName(transitionName);
+  } else {
+    const toDepth = to.path.split("/").length;
+    const fromDepth = from.path.split("/").length;
+    const transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+    BaseModule.setTransitionName(transitionName);
+  }
 
   const token = AuthService.getLocalToken();
 
