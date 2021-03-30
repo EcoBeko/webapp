@@ -10,10 +10,7 @@
         </span>
       </div>
       <div class="profil d-flex align-center">
-        <AvatarIcon
-          path="http://www.coe.int/documents/365513/10877703/statement-Navalny-arrest-2021-870x489.jpg/05e01810-5acc-7eec-dcf7-466fe7174c0a"
-          class="mr-4"
-        />
+        <AvatarIcon :path="user.avatar" class="mr-4" />
         <span class="white--text">
           {{ fullName }}
         </span>

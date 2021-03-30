@@ -1,7 +1,7 @@
 <template>
   <div class="avatar-icon">
     <template v-if="path">
-      <img class="avatar-image" :src="path" alt="avatar" />
+      <img class="avatar-image" :src="computedPath" alt="avatar" />
     </template>
     <template v-else>
       <div
@@ -30,6 +30,13 @@ export default class AvatarIcon extends Vue {
       background: "grey lighten-2",
       icon: "grey",
     };
+  }
+
+  get computedPath() {
+    if (process.env.NODE_ENV === "production") {
+      return "static/" + this.path;
+    }
+    return "http://localhost:3000/static/" + this.path;
   }
 }
 </script>

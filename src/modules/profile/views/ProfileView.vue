@@ -51,8 +51,10 @@
       </v-form>
     </v-card-text>
     <v-card-actions class="pa-4 pt-0">
-      <v-btn color="primary" @click="update">Update</v-btn>
+      <v-btn color="primary" @click="update()">Update</v-btn>
+      <v-btn color="primary" @click="upload">Upload new Avatar</v-btn>
     </v-card-actions>
+    <UploadImageDialog ref="imageDialog" />
   </v-card>
 </template>
 
@@ -63,8 +65,13 @@ import { AuthModule } from "@/modules/auth";
 import { AuthService } from "@/modules/auth/services/auth.service";
 import { BaseModule } from "@/modules/base";
 import { Component, Mixins } from "vue-property-decorator";
+import UploadImageDialog from "@/core/components/UploadImageDialog.vue";
 
-@Component({})
+@Component({
+  components: {
+    UploadImageDialog,
+  },
+})
 export default class ProfileView extends Mixins(FormValidator) {
   formRef = "form";
   first_name = this.user.first_name;
@@ -73,11 +80,15 @@ export default class ProfileView extends Mixins(FormValidator) {
   gender: UserGender = this.user.gender;
   show = false;
 
+  $refs: {
+    imageDialog: UploadImageDialog;
+  };
+
   get user() {
     return AuthModule._user;
   }
 
-  async update() {
+  async update(avatar?: string) {
     const result = await AuthService.updateUser(
       this.user.id,
       this.first_name,
@@ -85,6 +96,7 @@ export default class ProfileView extends Mixins(FormValidator) {
       this.password,
       this.gender,
       this.user.role,
+      avatar,
     );
 
     if (result.successful) {
@@ -97,7 +109,7 @@ export default class ProfileView extends Mixins(FormValidator) {
         id: this.user.id,
         username: this.user.username,
         gender: this.gender,
-        avatar: this.user.avatar,
+        avatar: avatar || this.user.avatar,
         role: this.user.role,
         status: this.user.status,
         first_name: this.first_name,
@@ -109,6 +121,21 @@ export default class ProfileView extends Mixins(FormValidator) {
         color: "error",
       });
     }
+  }
+
+  async upload() {
+    const result = await this.$refs.imageDialog.show(
+      `users/${this.user.username}`,
+      "avatar",
+    );
+
+    if (result.successful) {
+      return this.update(result.path);
+    }
+    BaseModule.showMessage({
+      message: "Something bad happened",
+      color: "error",
+    });
   }
 }
 </script>

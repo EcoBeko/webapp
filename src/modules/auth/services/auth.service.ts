@@ -69,6 +69,7 @@ export class AuthService {
     password: string,
     gender: UserGender,
     role: UserRole,
+    avatar: string,
   ) {
     const { data } = await api.put("users/" + id, {
       first_name,
@@ -76,6 +77,7 @@ export class AuthService {
       password,
       gender,
       role,
+      avatar,
     });
 
     return data;
