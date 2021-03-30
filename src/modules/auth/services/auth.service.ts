@@ -1,6 +1,5 @@
-import { UserRole } from "@/@types";
+import { UserGender, UserRole } from "@/@types";
 import { ApiCatch } from "@/core/decorators";
-import { router } from "@/core/router";
 import { api } from "@/core/services/api.service";
 import { AuthModule } from "..";
 
@@ -8,11 +7,7 @@ export class AuthService {
   public static async login() {
     const token = AuthService.getLocalToken();
 
-    if (!token) {
-      return router.push({
-        name: "welcome",
-      });
-    }
+    if (!token) return;
 
     try {
       // get user info
@@ -21,9 +16,6 @@ export class AuthService {
       AuthModule.setUser(data);
     } catch (error) {
       localStorage.removeItem("token");
-      return router.push({
-        name: "welcome",
-      });
     }
   }
 
@@ -36,6 +28,27 @@ export class AuthService {
     const { data } = await api.post("users/authenticate", {
       username,
       password,
+      role,
+    });
+
+    return data;
+  }
+
+  @ApiCatch
+  public static async createUser(
+    first_name: string,
+    last_name: string,
+    username: string,
+    password: string,
+    gender: UserGender,
+    role: UserRole,
+  ) {
+    const { data } = await api.post("users", {
+      first_name,
+      last_name,
+      username,
+      password,
+      gender,
       role,
     });
 
