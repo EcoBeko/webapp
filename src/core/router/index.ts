@@ -59,6 +59,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "news",
         name: "news",
+        component: () => import("@/modules/news/views/NewsView.vue"),
         meta: {
           index: 1,
         },

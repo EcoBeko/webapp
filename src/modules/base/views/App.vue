@@ -12,8 +12,9 @@
       </transition>
     </v-main>
 
-    <loading-bar />
-    <app-notification />
+    <LoadingBar />
+    <AppNotification />
+    <UploadImageDialog ref="imageDialog" />
   </v-app>
 </template>
 
@@ -24,11 +25,13 @@ import { AuthService } from "@/modules/auth/services/auth.service";
 
 import LoadingBar from "../components/LoadingBar.vue";
 import AppNotification from "../components/AppNotification.vue";
+import UploadImageDialog from "@/core/components/UploadImageDialog.vue";
 
 @Component({
   components: {
     LoadingBar,
     AppNotification,
+    UploadImageDialog,
   },
 })
 export default class App extends Vue {
@@ -60,6 +63,15 @@ export default class App extends Vue {
     this.isLoading = true;
     await AuthService.login();
     this.isLoading = false;
+  }
+
+  mounted() {
+    window.imageDialog = this.$refs.imageDialog;
+  }
+}
+declare global {
+  interface Window {
+    imageDialog: any;
   }
 }
 </script>
