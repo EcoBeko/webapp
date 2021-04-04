@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isShow" persistent max-width="550">
+  <v-dialog v-model="isShow" max-width="550">
     <v-card>
       <v-card-title>Upload dialog</v-card-title>
       <v-card-text>
@@ -41,6 +41,7 @@ export default class UploadImageDialog extends Vue {
   }
 
   cancel() {
+    this.file = null;
     this.isShow = false;
     this.resolve();
   }

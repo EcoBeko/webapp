@@ -24,8 +24,9 @@
       </div>
     </v-card-text>
     <v-card-actions class="px-4 pb-4">
-      <v-btn color="primary">Add</v-btn>
+      <v-btn color="primary" @click="add">Add</v-btn>
     </v-card-actions>
+    <AddStatsModal @recalculate="updateStats" ref="modal" />
   </v-card>
 </template>
 
@@ -33,16 +34,21 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { NewsModule } from "..";
 import StaticImage from "@/core/components/StaticImage.vue";
+import AddStatsModal from "../components/AddStatsModal.vue";
 import { AuthModule } from "@/modules/auth";
 import { BaseModule } from "@/modules/base";
 
 @Component({
   components: {
     StaticImage,
+    AddStatsModal,
   },
 })
 export default class StatsWindow extends Vue {
   tab = 0;
+  $refs: {
+    modal: AddStatsModal;
+  };
 
   @Watch("tab")
   async updateStats() {
@@ -67,6 +73,10 @@ export default class StatsWindow extends Vue {
   async created() {
     await NewsModule.getStatsTypes();
     await NewsModule.getUserStats(AuthModule._user.id);
+  }
+
+  add() {
+    this.$refs.modal.show();
   }
 }
 </script>

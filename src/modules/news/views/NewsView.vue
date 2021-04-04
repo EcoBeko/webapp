@@ -2,7 +2,9 @@
   <div id="news-view" class="d-flex">
     <div class="feed"></div>
     <aside class="modules">
-      <StatsWindow />
+      <keep-alive>
+        <StatsWindow />
+      </keep-alive>
     </aside>
   </div>
 </template>

@@ -5,7 +5,7 @@ import {
   VuexModule,
 } from "vuex-module-decorators";
 import { store } from "@/core/store";
-import { api } from "@/core/services/api.service";
+import { StatsService } from "./services/stats.service";
 
 @Module({
   namespaced: true,
@@ -19,25 +19,22 @@ class NewsVuexModule extends VuexModule {
 
   @MutationAction
   public async getStatsTypes() {
-    const { data } = await api.get("stats/types");
     return {
-      statsTypes: data,
+      statsTypes: await StatsService.getStatsTypes(),
     };
   }
 
   @MutationAction
   public async getUserStats(id: string) {
-    const { data } = await api.get("stats/" + id);
     return {
-      stats: data,
+      stats: await StatsService.getUserStats(id),
     };
   }
 
   @MutationAction
   public async getGlobalStats() {
-    const { data } = await api.get("stats");
     return {
-      stats: data,
+      stats: await StatsService.getGlobalStats(),
     };
   }
 }
