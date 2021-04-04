@@ -22,6 +22,15 @@ export class PostsService {
 
   public static async fetchPosts(userId: string) {
     const { data } = await api.get("posts/" + userId + "/feed");
+
+    return data;
+  }
+
+  public static async setLike(postId: string, userId: string) {
+    const { data } = await api.put("posts/" + postId + "/likes", {
+      userId,
+    });
+
     return data;
   }
 }

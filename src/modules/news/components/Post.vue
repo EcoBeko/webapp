@@ -23,6 +23,11 @@
             readonly
           />
         </template>
+        <v-divider class="my-4"></v-divider>
+        <div class="likes d-flex align-center">
+          <v-icon class="mr-1 cursor-p" @click="setLike">{{ icon }}</v-icon>
+          <span class="text-h7">{{ likesCount }}</span>
+        </div>
       </v-card-text>
     </v-card>
   </article>
@@ -34,6 +39,7 @@ import AvatarIcon from "@/core/components/AvatarIcon.vue";
 import Editor from "@/core/components/Editor.vue";
 import PostImage from "./PostImage.vue";
 import moment from "moment";
+import { AuthModule } from "@/modules/auth";
 
 @Component({
   components: {
@@ -54,6 +60,21 @@ export default class Post extends Vue {
     return this.post.content.files.map(
       (name: string) => `posts/${this.post.id}/${name}`,
     );
+  }
+
+  get likesCount() {
+    return this.post.content.likes.length;
+  }
+
+  get icon() {
+    const like = this.post.content.likes.find(
+      (id: string) => id === AuthModule._user.id,
+    );
+    return like ? "mdi-heart" : "mdi-heart-outline";
+  }
+
+  public setLike() {
+    this.$emit("like", this.post.id);
   }
 }
 </script>

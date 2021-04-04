@@ -14,10 +14,7 @@ export default class StaticImage extends Vue {
   readonly src: string;
 
   get computedPath() {
-    if (process.env.NODE_ENV === "production") {
-      return "static/" + this.src;
-    }
-    return "http://localhost:3000/static/" + this.src;
+    return "https://eco-beko.ryspekov.life/app/static/" + this.src;
   }
 }
 </script>
