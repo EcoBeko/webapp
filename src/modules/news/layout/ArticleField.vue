@@ -32,6 +32,7 @@
             Open article editor
           </v-btn>
         </div>
+        <EditArticleModal ref="articleModal" @create="createArticle" />
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -41,16 +42,19 @@
 import { Component, Mixins } from "vue-property-decorator";
 import StaticImage from "@/core/components/StaticImage.vue";
 import FormValidator from "@/core/mixins/FormValidator";
+import EditArticleModal from "./EditArticleModal.vue";
 import { PostsService } from "../services/posts.service";
 import { AuthorType, PostType } from "@/@types";
 import { AuthModule } from "@/modules/auth";
 import { ImageService } from "@/core/services/image.service";
 import { getFileName } from "@/core/utils";
 import { BaseModule } from "@/modules/base";
+import { OutputData } from "@editorjs/editorjs";
 
 @Component({
   components: {
     StaticImage,
+    EditArticleModal,
   },
 })
 export default class ArticleField extends Mixins(FormValidator) {
@@ -101,10 +105,40 @@ export default class ArticleField extends Mixins(FormValidator) {
     this.resetForm();
 
     this.$emit("post-added");
+    this.$refs.articleModal.cancel();
   }
 
+  $refs: {
+    articleModal: EditArticleModal;
+  };
   showArticleEditor() {
-    //
+    this.$refs.articleModal.show();
+  }
+
+  async createArticle(data: OutputData) {
+    BaseModule.setLoadingStatus(true);
+
+    await PostsService.createPost(
+      {
+        ...data,
+        likes: [],
+      },
+      PostType.ARTICLE,
+      AuthorType.USER,
+      AuthModule._user.id,
+      [],
+    );
+
+    BaseModule.setLoadingStatus(false);
+
+    BaseModule.showMessage({
+      message: "Article successfully added",
+      color: "success",
+    });
+
+    this.panels = [];
+
+    this.$emit("post-added");
   }
 }
 </script>

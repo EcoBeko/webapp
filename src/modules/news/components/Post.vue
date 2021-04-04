@@ -1,28 +1,37 @@
 <template>
   <article class="post">
-    <template v-if="post.type == 'post'">
-      <v-card>
-        <v-card-title class="d-flex">
-          <AvatarIcon :path="post.author_avatar" class="avatar mr-4" />
-          <div class="d-flex flex-column">
-            <span class="name">{{ post.author_name }}</span>
-            <span class="date">{{ date }}</span>
-          </div>
-        </v-card-title>
-        <v-card-text>
+    <v-card>
+      <v-card-title class="d-flex">
+        <AvatarIcon :path="post.author_avatar" class="avatar mr-4" />
+        <div class="d-flex flex-column">
+          <span class="name">{{ post.author_name }}</span>
+          <span class="date">{{ date }}</span>
+        </div>
+      </v-card-title>
+      <v-card-text>
+        <template v-if="post.type == 'post'">
           <div class="text mb-4">{{ post.content.text }}</div>
           <div class="images">
             <PostImage v-for="path in images" :key="path" :path="path" />
           </div>
-        </v-card-text>
-      </v-card>
-    </template>
+        </template>
+        <template v-else>
+          <Editor
+            class="article-content"
+            :id="post.id"
+            :data="post.content"
+            readonly
+          />
+        </template>
+      </v-card-text>
+    </v-card>
   </article>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import AvatarIcon from "@/core/components/AvatarIcon.vue";
+import Editor from "@/core/components/Editor.vue";
 import PostImage from "./PostImage.vue";
 import moment from "moment";
 
@@ -30,6 +39,7 @@ import moment from "moment";
   components: {
     AvatarIcon,
     PostImage,
+    Editor,
   },
 })
 export default class Post extends Vue {
@@ -67,5 +77,13 @@ export default class Post extends Vue {
 }
 .text {
   font-size: 1rem;
+}
+</style>
+
+<style lang="scss">
+.article-content {
+  .codex-editor__redactor {
+    padding-bottom: 0px !important;
+  }
 }
 </style>
