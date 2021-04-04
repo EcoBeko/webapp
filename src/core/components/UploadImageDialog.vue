@@ -21,7 +21,7 @@
 <script lang="ts">
 import { BaseModule } from "@/modules";
 import { Component, Vue } from "vue-property-decorator";
-import { api } from "../services/api.service";
+import { ImageService } from "../services/image.service";
 
 @Component({})
 export default class UploadImageDialog extends Vue {
@@ -48,17 +48,13 @@ export default class UploadImageDialog extends Vue {
 
   async upload() {
     BaseModule.setLoadingStatus(true);
-    const formData = new FormData();
-    formData.append("file", this.file);
-    formData.append("path", this.path);
-    formData.append("name", this.name);
-    const { data } = await api.post("images", formData, {
-      headers: {
-        "Content-Type": `multipart/form-data`,
-      },
-    });
+    const result = await ImageService.uploadFile(
+      this.file,
+      this.path,
+      this.name,
+    );
     this.isShow = false;
-    this.resolve(data);
+    this.resolve(result);
     BaseModule.setLoadingStatus(false);
   }
 }

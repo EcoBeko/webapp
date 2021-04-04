@@ -55,6 +55,9 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "index",
     component: AppMain,
+    redirect: {
+      name: "news",
+    },
     children: [
       {
         path: "news",

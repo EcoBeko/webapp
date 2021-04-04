@@ -6,6 +6,10 @@ import { router } from "@/core/router";
 import { store } from "@/core/store";
 import { vuetify } from "@/core/plugins/vuetify";
 
+import VueLazyload from "vue-lazyload";
+
+Vue.use(VueLazyload);
+
 Vue.config.productionTip = false;
 
 new Vue({

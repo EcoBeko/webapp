@@ -2,6 +2,7 @@
   <v-card id="profile-view">
     <v-card-title>Profile</v-card-title>
     <v-card-text>
+      <AvatarIcon :path="user.avatar" class="mb-6 avatar" />
       <v-form :ref="formRef" class="form">
         <v-text-field
           v-model="first_name"
@@ -66,10 +67,12 @@ import { AuthService } from "@/modules/auth/services/auth.service";
 import { BaseModule } from "@/modules/base";
 import { Component, Mixins } from "vue-property-decorator";
 import UploadImageDialog from "@/core/components/UploadImageDialog.vue";
+import AvatarIcon from "@/core/components/AvatarIcon.vue";
 
 @Component({
   components: {
     UploadImageDialog,
+    AvatarIcon,
   },
 })
 export default class ProfileView extends Mixins(FormValidator) {
@@ -143,5 +146,11 @@ export default class ProfileView extends Mixins(FormValidator) {
 <style lang="scss" scoped>
 .form {
   max-width: 500px;
+}
+#profile-view {
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
 }
 </style>

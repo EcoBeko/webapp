@@ -88,11 +88,14 @@ export default class AddStatsModal extends Mixins(FormValidator) {
   async add() {
     if (!this.validateForm()) return;
 
+    BaseModule.setLoadingStatus(true);
+
     await Promise.all(
       this.selected.map(type =>
         StatsService.addStatsRecord(AuthModule._user.id, type.id, type.value),
       ),
     );
+    BaseModule.setLoadingStatus(false);
 
     BaseModule.showMessage({
       message: "Successfully added",

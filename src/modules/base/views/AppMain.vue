@@ -33,5 +33,6 @@ export default class AppMain extends Vue {
 #app-main {
   background-image: url("../../../assets/app/background.svg");
   background-size: cover;
+  background-attachment: fixed;
 }
 </style>

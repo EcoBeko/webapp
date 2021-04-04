@@ -1,5 +1,5 @@
 <template>
-  <img :src="computedPath" :alt="alt" />
+  <img v-lazy="computedPath" :alt="alt" />
 </template>
 
 <script lang="ts">

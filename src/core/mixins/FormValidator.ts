@@ -53,9 +53,15 @@ export default class extends Vue {
     }).validate();
   }
 
+  public resetForm() {
+    return (this.$refs[this.formRef] as Vue & {
+      reset: () => void;
+    }).reset();
+  }
+
   private stringLengthMax(max: number) {
     return (value = "") => {
-      if (max && value.length > max) {
+      if (max && value?.length > max) {
         return `Length should not exceed ${max} characters`;
       }
       return true;
@@ -63,7 +69,7 @@ export default class extends Vue {
   }
   private stringLengthMin(min: number) {
     return (value = "") => {
-      if (value.length < min) {
+      if (value?.length < min) {
         return `Length must be higher than ${min} characters`;
       }
       return true;
