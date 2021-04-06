@@ -84,9 +84,33 @@ const routes: Array<RouteConfig> = [
       {
         path: "friends",
         name: "friends",
+        component: () => import("@/modules/friends/views/FriendsView.vue"),
         meta: {
           index: 4,
         },
+        redirect: {
+          name: "my-friends",
+        },
+        children: [
+          {
+            path: "my",
+            name: "my-friends",
+            component: () =>
+              import("@/modules/friends/views/MyFriendsView.vue"),
+            meta: {
+              index: 1,
+            },
+          },
+          {
+            path: "search",
+            name: "search-friends",
+            component: () =>
+              import("@/modules/friends/views/SearchFriendsView.vue"),
+            meta: {
+              index: 2,
+            },
+          },
+        ],
       },
       {
         path: "profile",
