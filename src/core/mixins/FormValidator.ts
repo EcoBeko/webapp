@@ -39,6 +39,18 @@ export default class extends Vue {
         if (!value) return true;
         return required.phone(value);
       },
+      stringLengthMinOptional: (min: number) => {
+        return (value: string) => {
+          if (!value) return true;
+          return required.stringLengthMin(min)(value);
+        };
+      },
+      stringLengthMaxOptional: (max: number) => {
+        return (value: string) => {
+          if (!value) return true;
+          return required.stringLengthMax(max)(value);
+        };
+      },
     };
 
     return {

@@ -1,6 +1,6 @@
 <template>
   <div id="friends-view">
-    <nav class="tabs white px-8 d-flex">
+    <v-card class="tabs white px-8 d-flex" tag="nav">
       <router-link
         class="nav-link d-flex align-center mr-8"
         active-class="nav-link_active"
@@ -15,9 +15,9 @@
       >
         Search for Friends
       </router-link>
-    </nav>
+    </v-card>
     <transition mode="out-in" :name="transitionName">
-      <router-view class="friends-tab"></router-view>
+      <router-view class="friends-tab mt-8"></router-view>
     </transition>
   </div>
 </template>

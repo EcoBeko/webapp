@@ -60,6 +60,14 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
+        path: "users/:id",
+        name: "users-id",
+        component: () => import("@/modules/friends/views/UserView.vue"),
+        meta: {
+          index: 0,
+        },
+      },
+      {
         path: "news",
         name: "news",
         component: () => import("@/modules/news/views/NewsView.vue"),

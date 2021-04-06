@@ -33,6 +33,7 @@ export interface IUser {
   avatar: string;
   role: UserRole;
   status: GenericStatus;
+  [key: string]: any;
 }
 
 declare module "vue/types/vue" {
