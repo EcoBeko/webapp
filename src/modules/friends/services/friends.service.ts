@@ -42,4 +42,10 @@ export class FriendsService {
 
     return data;
   }
+
+  public static async getUserRecommendations(userId: string) {
+    const { data } = await api.get(`friends/${userId}/recommendations`);
+
+    return data;
+  }
 }

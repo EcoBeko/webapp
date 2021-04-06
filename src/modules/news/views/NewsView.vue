@@ -19,8 +19,9 @@
     </div>
     <aside class="modules">
       <keep-alive>
-        <StatsWindow />
+        <StatsWindow class="mb-8" />
       </keep-alive>
+      <RecommendationsWindow />
     </aside>
   </div>
 </template>
@@ -28,6 +29,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import StatsWindow from "../layout/StatsWindow.vue";
+import RecommendationsWindow from "../layout/RecommendationsWindow.vue";
 import ArticleField from "../layout/ArticleField.vue";
 import Post from "../components/Post.vue";
 import { PostsService } from "../services/posts.service";
@@ -37,6 +39,7 @@ import moment from "moment";
 @Component({
   components: {
     StatsWindow,
+    RecommendationsWindow,
     ArticleField,
     Post,
   },
