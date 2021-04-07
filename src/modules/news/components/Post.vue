@@ -25,7 +25,9 @@
         </template>
         <v-divider class="my-4"></v-divider>
         <div class="likes d-flex align-center">
-          <v-icon class="mr-1 cursor-p" @click="setLike">{{ icon }}</v-icon>
+          <v-icon color="primary" class="mr-1 cursor-p" @click="setLike">
+            {{ icon }}
+          </v-icon>
           <span class="text-h7">{{ likesCount }}</span>
         </div>
       </v-card-text>
