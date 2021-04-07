@@ -78,6 +78,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "map",
         name: "map",
+        component: () => import("@/modules/map/views/MapView.vue"),
         meta: {
           index: 2,
         },
