@@ -132,6 +132,8 @@ const routes: Array<RouteConfig> = [
       {
         path: "communities",
         name: "communities",
+        component: () =>
+          import("@/modules/communities/views/CommunitiesView.vue"),
         meta: {
           index: 6,
         },
