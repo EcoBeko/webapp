@@ -1,12 +1,17 @@
 <template>
   <article class="post">
     <v-card>
-      <v-card-title class="d-flex">
-        <AvatarIcon :path="post.author_avatar" class="avatar mr-4" />
-        <div class="d-flex flex-column">
-          <span class="name">{{ post.author_name }}</span>
-          <span class="date">{{ date }}</span>
-        </div>
+      <v-card-title>
+        <router-link
+          class="d-flex align-center text-decoration-none"
+          :to="path"
+        >
+          <AvatarIcon :path="post.author_avatar" class="avatar mr-4" />
+          <div class="d-flex flex-column">
+            <span class="name">{{ post.author_name }}</span>
+            <span class="date">{{ date }}</span>
+          </div>
+        </router-link>
       </v-card-title>
       <v-card-text>
         <template v-if="post.type == 'post'">
@@ -68,8 +73,15 @@ export default class Post extends Vue {
     return this.post.content.likes.length;
   }
 
+  get path() {
+    if (this.post.author_type === "user") {
+      return "/users/" + this.post.author_id;
+    }
+    return "/communities/" + this.post.author_id;
+  }
+
   get icon() {
-    const like = this.post.content.likes.find(
+    const like = this.post.content.likes?.find(
       (id: string) => id === AuthModule._user.id,
     );
     return like ? "mdi-heart" : "mdi-heart-outline";

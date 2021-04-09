@@ -30,6 +30,7 @@
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@mdi/font": "^5.9.55",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",

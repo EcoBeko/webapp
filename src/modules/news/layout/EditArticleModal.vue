@@ -64,7 +64,7 @@ export default class EditArticleModal extends Vue {
 
   cancel() {
     this.isShow = false;
-    this.$refs.editor.clear();
+    this.$refs.editor?.clear();
   }
 }
 </script>

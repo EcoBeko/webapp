@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from "vue-property-decorator";
+import { Component, Mixins, Prop } from "vue-property-decorator";
 import StaticImage from "@/core/components/StaticImage.vue";
 import FormValidator from "@/core/mixins/FormValidator";
 import EditArticleModal from "./EditArticleModal.vue";
@@ -66,6 +66,12 @@ export default class ArticleField extends Mixins(FormValidator) {
   formRef = "form";
   panels = [];
 
+  @Prop({
+    type: String,
+    required: false,
+  })
+  readonly communityId: string;
+
   async publishPost() {
     if (!this.validateForm()) return;
 
@@ -74,13 +80,14 @@ export default class ArticleField extends Mixins(FormValidator) {
     const data = {
       text: this.postData.text,
       files: this.postData.files.map(file => file.name),
+      likes: [],
     };
 
     const { _post_id } = await PostsService.createPost(
       data,
       PostType.POST,
-      AuthorType.USER,
-      AuthModule._user.id,
+      this.communityId ? AuthorType.COMMUNITY : AuthorType.USER,
+      this.communityId || AuthModule._user.id,
       data.files,
     );
 
@@ -124,8 +131,8 @@ export default class ArticleField extends Mixins(FormValidator) {
         likes: [],
       },
       PostType.ARTICLE,
-      AuthorType.USER,
-      AuthModule._user.id,
+      this.communityId ? AuthorType.COMMUNITY : AuthorType.USER,
+      this.communityId || AuthModule._user.id,
       [],
     );
 

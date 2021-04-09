@@ -1,4 +1,5 @@
 import "@/assets/scss/index.scss";
+import "@mdi/font/css/materialdesignicons.min.css";
 import Vue from "vue";
 import App from "@/modules/base/views/App.vue";
 

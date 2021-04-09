@@ -5,7 +5,7 @@
         <template #item="{ item }">
           <div class="community d-flex align-center">
             <router-link
-              class="d-flex align-center pa-4 text-decoration-none"
+              class="d-flex align-center pa-4 text-decoration-none full-width"
               :to="buildPath(item.id)"
             >
               <AvatarIcon :path="item.main_image" class="avatar mr-4" />
@@ -20,12 +20,14 @@
                   <div class="c-description">{{ item.description }}</div>
                 </v-tooltip>
               </div>
+              <v-spacer></v-spacer>
+              <div class="mr-4">{{ item.subscribers }}</div>
             </router-link>
           </div>
         </template>
       </v-data-table>
     </v-card>
-    <v-card>
+    <v-card max-width="350">
       <v-card-title>Community Filter</v-card-title>
       <v-card-text>
         <v-form ref="form">
@@ -45,11 +47,15 @@
           ></v-text-field>
         </v-form>
       </v-card-text>
-      <v-card-actions class="pa-6 pt-0">
+      <v-card-actions class="pa-6 pt-0 d-flex flex-wrap">
         <v-btn color="primary" @click="fetch">Search</v-btn>
         <v-btn color="primary" text outlined @click="resetForm">Clear</v-btn>
+        <v-btn color="primary" text outlined @click="add" class="ml-0 mt-2">
+          Add community
+        </v-btn>
       </v-card-actions>
     </v-card>
+    <AddCommunityModal ref="addModal" />
   </div>
 </template>
 
@@ -59,22 +65,17 @@ import { Component, Mixins } from "vue-property-decorator";
 import AvatarIcon from "@/core/components/AvatarIcon.vue";
 import FormValidator from "@/core/mixins/FormValidator";
 import { CommunitiesService } from "../services/communities.service";
+import { descriptionFilter, titleFilter } from "@/core/utils";
+import AddCommunityModal from "../layouts/AddCommunityModal.vue";
 
 @Component({
   components: {
     AvatarIcon,
+    AddCommunityModal,
   },
   filters: {
-    filter(str: string) {
-      return str.replace(/\\/g, "");
-    },
-    filterD(str: string) {
-      const threshold = 100;
-      if (str.length < threshold) {
-        return str.replace(/\\/g, "");
-      }
-      return str.slice(0, threshold - 3).replace(/\\/g, "") + "...";
-    },
+    filter: titleFilter,
+    filterD: descriptionFilter,
   },
 })
 export default class CommunitiesView extends Mixins(FormValidator) {
@@ -100,6 +101,13 @@ export default class CommunitiesView extends Mixins(FormValidator) {
 
   buildPath(id: string) {
     return `/communities/${id}`;
+  }
+
+  $refs: {
+    addModal: AddCommunityModal;
+  };
+  async add() {
+    this.$refs.addModal.show();
   }
 }
 </script>
