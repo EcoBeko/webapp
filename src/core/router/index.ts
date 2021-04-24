@@ -209,6 +209,8 @@ const routes: Array<RouteConfig> = [
       {
         path: "eco-projects",
         name: "eco-projects",
+        component: () =>
+          import("@/modules/eco-projects/views/EcoProjectsView.vue"),
         meta: {
           index: 7,
         },
