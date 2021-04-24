@@ -40,10 +40,6 @@ export default class AppNavigation extends Vue {
         path: "/map",
       },
       {
-        name: "Messages",
-        path: "/messages",
-      },
-      {
         name: "Friends",
         path: "/friends",
       },
