@@ -1,27 +1,40 @@
 <template>
   <div id="admin-users-view" class="mt-8">
+    <v-dialog v-model="dialog" persistent max-width="500">
+      <v-card>
+        <v-card-title>Add User</v-card-title>
+        <v-card-text>
+          <v-form :ref="formRef" class="form mb-4">
+            <v-text-field
+              v-model="username"
+              label="Username"
+              outlined
+              class="full-width"
+              :rules="[rules.required]"
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              label="Password"
+              outlined
+              class="full-width"
+              :rules="[rules.required]"
+              :type="show ? 'text' : 'password'"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="show = !show"
+            ></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-card-actions class="pa-6 pt-0 d-flex">
+          <v-btn @click="add" color="primary" class="mr-4">Add</v-btn>
+          <v-btn @click="dialog = false" color="primary" text outlined>
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-data-table :items="moderatorsParsed" :headers="headers">
       <template #top>
-        <v-form :ref="formRef" class="form mb-4">
-          <v-text-field
-            v-model="username"
-            label="Username"
-            outlined
-            class="full-width"
-            :rules="[rules.required]"
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            label="Password"
-            outlined
-            class="full-width"
-            :rules="[rules.required]"
-            :type="show ? 'text' : 'password'"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="show = !show"
-          ></v-text-field>
-          <v-btn @click="add" color="primary">Add</v-btn>
-        </v-form>
+        <v-btn @click="dialog = true" color="primary">Add User</v-btn>
       </template>
       <template #[`item.actions`]="{ item }">
         <div class="actions">
@@ -41,6 +54,7 @@ import { AdminService } from "../services/admin.service";
 @Component({})
 export default class AdminUsersView extends Mixins(FormValidator) {
   moderators = [];
+  dialog = false;
 
   formRef = "form";
 
