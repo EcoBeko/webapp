@@ -1,5 +1,6 @@
 import { UserGender, UserRole } from "@/@types";
 import { ApiCatch } from "@/core/decorators";
+import { router } from "@/core/router";
 import { api } from "@/core/services/api.service";
 import { AuthModule } from "..";
 
@@ -15,7 +16,9 @@ export class AuthService {
 
       AuthModule.setUser(data);
     } catch (error) {
-      localStorage.removeItem("token");
+      if (!router.currentRoute.meta.isAdmin) {
+        localStorage.removeItem("token");
+      }
     }
   }
 

@@ -52,6 +52,32 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: "/admin",
+    name: "admin",
+    component: () => import("@/modules/admin/views/AdminView.vue"),
+    redirect: {
+      name: "admin-users",
+    },
+    children: [
+      {
+        path: "auth",
+        name: "admin-auth",
+        component: () => import("@/modules/admin/views/AdminAuthView.vue"),
+        meta: {
+          isPublic: true,
+        },
+      },
+      {
+        path: "users",
+        name: "admin-users",
+        component: () => import("@/modules/admin/views/AdminUsersView.vue"),
+        meta: {
+          isAdmin: true,
+        },
+      },
+    ],
+  },
+  {
     path: "/",
     name: "index",
     component: AppMain,
@@ -179,12 +205,16 @@ router.beforeEach((to, from, next) => {
   const token = AuthService.getLocalToken();
 
   if (to.meta.isPublic && token) {
+    const name = to.meta.isAdmin ? "admin-auth" : "news";
+
     return next({
-      name: "news",
+      name,
     });
   } else if (!to.meta.isPublic && !token) {
+    const name = to.meta.isAdmin ? "admin-auth" : "welcome";
+
     return next({
-      name: "welcome",
+      name,
     });
   }
 

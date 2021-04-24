@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { router } from "@/core/router";
 
 import { AuthService } from "@/modules/auth/services/auth.service";
 
@@ -13,5 +14,21 @@ api.interceptors.request.use(config => {
   }
   return config;
 });
+
+api.interceptors.response.use(
+  _ => _,
+  error => {
+    const response = error.response as AxiosResponse;
+
+    if (response.status === 403) {
+      localStorage.removeItem("token");
+      router.push({
+        path: "/",
+      });
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export { api };
