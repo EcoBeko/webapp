@@ -78,6 +78,34 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
+    path: "/moderation",
+    name: "moderation",
+    component: () => import("@/modules/moderation/views/ModerationView.vue"),
+    redirect: {
+      name: "moderation-projects",
+    },
+    children: [
+      {
+        path: "auth",
+        name: "moderation-auth",
+        component: () =>
+          import("@/modules/moderation/views/ModerationAuthView.vue"),
+        meta: {
+          isPublic: true,
+        },
+      },
+      {
+        path: "projects",
+        name: "moderation-projects",
+        component: () =>
+          import("@/modules/moderation/views/ModerationProjectsView.vue"),
+        meta: {
+          isModerator: true,
+        },
+      },
+    ],
+  },
+  {
     path: "/",
     name: "index",
     component: AppMain,
@@ -205,13 +233,21 @@ router.beforeEach((to, from, next) => {
   const token = AuthService.getLocalToken();
 
   if (to.meta.isPublic && token) {
-    const name = to.meta.isAdmin ? "admin-auth" : "news";
+    const name = to.meta.isAdmin
+      ? "admin-auth"
+      : to.meta.isModerator
+      ? "moderation-auth"
+      : "news";
 
     return next({
       name,
     });
   } else if (!to.meta.isPublic && !token) {
-    const name = to.meta.isAdmin ? "admin-auth" : "welcome";
+    const name = to.meta.isAdmin
+      ? "admin-auth"
+      : to.meta.isModerator
+      ? "moderation-auth"
+      : "welcome";
 
     return next({
       name,
