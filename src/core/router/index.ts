@@ -28,6 +28,11 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    path: "/logout",
+    name: "logout",
+    meta: {},
+  },
+  {
     path: "/welcome",
     name: "welcome",
     component: () => import("@/modules/welcome/views/WelcomeView.vue"),
@@ -228,6 +233,10 @@ router.beforeEach((to, from, next) => {
     const fromDepth = from.path.split("/").length;
     const transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
     BaseModule.setTransitionName(transitionName);
+  }
+
+  if (to.name == "logout") {
+    localStorage.removeItem("token");
   }
 
   const token = AuthService.getLocalToken();

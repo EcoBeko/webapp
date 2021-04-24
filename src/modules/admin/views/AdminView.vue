@@ -5,7 +5,8 @@
       <h1 class="logo-text text-h4">EcoBeko - Admin Module</h1>
     </header>
     <nav class="d-flex">
-      <router-link to="/admin/users">Users</router-link>
+      <router-link to="/admin/users" class="mr-4">Users</router-link>
+      <router-link to="/logout">Logout</router-link>
     </nav>
     <main class="flex-grow-1">
       <router-view></router-view>

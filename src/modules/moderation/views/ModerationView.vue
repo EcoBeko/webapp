@@ -5,7 +5,10 @@
       <h1 class="logo-text text-h4">EcoBeko - Moderation Module</h1>
     </header>
     <nav class="d-flex">
-      <router-link to="/moderation/projects">Eco-Projects</router-link>
+      <router-link to="/moderation/projects" class="mr-4">
+        Eco-Projects
+      </router-link>
+      <router-link to="/logout">Logout</router-link>
     </nav>
     <main class="flex-grow-1">
       <router-view></router-view>
